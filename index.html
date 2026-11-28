@@ -7,6 +7,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="./manifest.json" id="pwa-manifest-link">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
 <link rel="apple-touch-icon" href="./icon-192.png">
 <title>Marcos Lisboa – Transporte & Cuidado Especializado</title>
 <style>
@@ -1344,24 +1346,16 @@
 <script type="application/json" id="app-embedded-state">null</script>
 
 <script>
-/* PWA MANIFEST INJECTION */
-(function setupPwaManifest() {
+/* PWA MANIFEST & SERVICE WORKER REGISTRATION */
+(function setupPwaManifestAndSw() {
  try {
- const manifest = {
- name: 'Marcos Lisboa – Transporte & Cuidado Especializado',
- short_name: 'Marcos Lisboa',
- start_url: '.',
- display: 'standalone',
- background_color: '#0f2342',
- theme_color: '#0f2342',
- icons: [{
- src: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 160"><rect width="240" height="160" rx="30" fill="#ffffff"/><path d="M32 75 L42 52 C46 45 53 42 62 42 L98 42 C107 42 114 45 118 52 L128 75 C132 78 134 83 134 90 L134 106 L122 106 L122 113 C122 117 119 119 115 119 L109 119 C105 119 102 117 102 113 L102 108 L58 109 L58 115 C58 119 55 122 51 122 L44 122 C40 122 37 119 37 115 L37 108 L26 108 L26 90 C26 83 28 78 32 75 Z" fill="#002855"/><circle cx="161" cy="31" r="10.5" fill="#002855"/><path d="M145 52 C148 45 157 44 164 48 L181 60 L192 62 C195 63 196 66 194 68 C192 70 188 70 184 69 L171 65 L167 79 L172 104 L161 105 L156 84 L149 106 L139 106 L143 75 C142 66 143 58 145 52 Z" fill="#002855"/><circle cx="197" cy="46" r="9.5" fill="#2e9e28"/><path d="M184 68 C187 60 196 58 204 62 C211 66 214 74 213 83 L216 101 L206 102 L202 87 L196 103 L187 103 L192 82 L183 77 C180 75 181 71 184 68 Z" fill="#2e9e28"/><path d="M14 133 C65 113 145 112 202 104 C221 101 225 94 216 88 C231 94 231 107 205 113 C150 123 72 120 14 133 Z" fill="#2e9e28"/></svg>'),
- sizes: '240x160',
- type: 'image/svg+xml'
- }]
- };
  const link = document.getElementById('pwa-manifest-link');
- if (link) link.href = 'data:application/manifest+json;charset=utf-8,' + encodeURIComponent(JSON.stringify(manifest));
+ if (link && !link.getAttribute('href')) {
+ link.setAttribute('href', './manifest.json');
+ }
+ if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+ navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(() => {});
+ }
  } catch (e) {}
 })();
 
