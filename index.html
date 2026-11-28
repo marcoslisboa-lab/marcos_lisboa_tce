@@ -6,7 +6,8 @@
 <meta name="theme-color" content="#0f2342">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="manifest" id="pwa-manifest-link">
+<link rel="manifest" href="./manifest.json" id="pwa-manifest-link">
+<link rel="apple-touch-icon" href="./icon-192.png">
 <title>Marcos Lisboa – Transporte & Cuidado Especializado</title>
 <style>
  :root {
@@ -2093,8 +2094,20 @@ function cleanStreetAddressForGeocoder(rawStr) {
  return s.replace(/\s+/g, ' ').trim();
 }
 
+const KNOWN_REGIONAL_COORDS = [
+ { keys: ['hcfmb', 'unesp', 'rubiao', 'rubião', 'hospital das clinicas', 'hospital das clínicas'], lat: -22.8886, lon: -48.4945, label: 'HCFMB Unesp – Rubião Júnior, Botucatu - SP' },
+ { keys: ['amando de barros'], lat: -22.8858, lon: -48.4450, label: 'Rua Amando de Barros, Centro, Botucatu - SP' },
+ { keys: ['santa casa de conchas', 'hospital conchas'], lat: -23.0165, lon: -48.0128, label: 'Hospital Santa Casa de Conchas - SP' }
+];
+
 async function geocodeAddress(query) {
  const raw = (query || '').trim();
+ const lowerRaw = raw.toLowerCase();
+ for (const item of KNOWN_REGIONAL_COORDS) {
+ if (item.keys.some(k => lowerRaw.includes(k))) {
+ return { lat: item.lat, lon: item.lon, display: item.label };
+ }
+ }
  const cleaned = cleanStreetAddressForGeocoder(raw);
  const candidates = raw.toLowerCase() !== cleaned.toLowerCase() ? [raw, cleaned] : [cleaned];
 
