@@ -1,10 +1,15 @@
 {
+  "id": "./",
   "name": "Marcos Lisboa – Transporte & Cuidado Especializado",
   "short_name": "Marcos Lisboa",
   "description": "Transporte e acompanhamento especializado em Conchas, Botucatu e região.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "orientation": "portrait-primary",
   "background_color": "#0f2342",
   "theme_color": "#0f2342",
@@ -14,6 +19,12 @@
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "./icon-512.png",
